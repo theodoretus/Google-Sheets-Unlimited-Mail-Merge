@@ -141,7 +141,7 @@ function sendMail() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
+      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
       Utilities.sleep(1000);
     }
   }
@@ -234,7 +234,7 @@ function labelMail() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
+      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
       Utilities.sleep(1000);
     }
   } 
