@@ -22,9 +22,11 @@ Breaking down the steps:
 
 IMPORTANT: The boilerplate draft template should be an actual Gmail draft, in your draft folder. It should be devoid of attachments or inline images. Any custom fields that will show in the body of the email (IN THIS CASE "NAME" AND "CUSTOM MESSAGE") should be rendered in the draft as ${Name}, ${Custom Message}, etc. The custom message field is expected to appear before the main body of the email (if a custom message is specified) but after the initial greeting, so HTML break tags are inserted before the custom message when it exists. Thus, the following format is recommended: 
 
-```Dear ${Name}, ${Custom Message} 
+```
+Dear ${Name}, ${Custom Message} 
 
-[remainder of email]```
+[remainder of email]
+```
 
 *Schedule sending of personalized emails*: In the "Mail Sender" tab, you can schedule a time for the emails to go out. Then, run the "3. Start Mail Schedule" function to commit your schedule. The remaining workflow step (*Allow sheet to send, label, and track emails + responses*) will happen automatically (updated on a daily basis in the "Responses" sheet).
 
@@ -33,5 +35,9 @@ IMPORTANT: The boilerplate draft template should be an actual Gmail draft, in yo
 Error handling is built into the code, but if sending or labeling fails, the "Resume Sending" and "Resume Labeling" functions can be used, respectively. If response tracking fails, you may run the "Check for Responses" function (under "Other Functions"). In these cases, it is wise to run "Delete All Triggers" first, to ensure there are no backed up triggers.
 
 In the event of wanting to stop the script, you can run "Delete All Triggers" to prevent future actions. If you need an emergency halt for sending or labeling as it is actively happening, however, you should manually delete any instances of the word "Scheduled", as it is a requirement for action that the word "Scheduled" be present in the "Mail Sender" sheet next to the email address for which a personalized template is generated, sent, and labeled.
+
+***
+
+Thanks are due to Amit Agarwal, whose contributions to GAS open sourcing are a great inspiration. 
 
 Enjoy!
