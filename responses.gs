@@ -69,7 +69,7 @@ function labelResponses() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
+      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
       Utilities.sleep(1000);
     }
     if (currentRetry == (maxRetries - 1)) {
@@ -91,7 +91,7 @@ function printResponses() {
       var countersSheet = ss.getSheetByName("Counters (Ignore)");
       var labelName = mailSenderSheet.getRange("B2").getValue() + "/Reply";
       var label = GmailApp.getUserLabelByName(labelName);
-      var totalThreads = threadCounter(label, "C2");
+      var totalThreads = threadCounter(label, "B2");
       var startTime= new Date().getTime();
       var cutoffTime = (1000 * 60 * 4);
   
@@ -127,7 +127,7 @@ function printResponses() {
         else {
           var responsesSheet = ss.getSheetByName("Responses");
           var responsesRowDataIndex = getRowDataIndex(responsesSheet);
-          var responderEmailData = responsesSheet.getRange(3, 4, responsesRowDataIndex, 2).getValues();
+          var responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
           var responderDataLength = responderEmailData.length;
           var responderEmailAddress = threads[i].getMessages()[1].getFrom();
           var responderEmailBody = threads[i].getMessages()[1].getPlainBody();
@@ -141,7 +141,7 @@ function printResponses() {
           if(!added) {
             responderEmailData[responderDataLength - 1][0] = responderEmailAddress;
             responderEmailData[responderDataLength - 1][1] = responderEmailBody;
-            responsesSheet.getRange(3, 4, responsesRowDataIndex, 2).setValues(responderEmailData);
+            responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).setValues(responderEmailData);
           }
       
           //check for completion of job; move to next day repetition of process if so
@@ -160,7 +160,7 @@ function printResponses() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
+      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
       Utilities.sleep(1000);
     }
     if (currentRetry == (maxRetries - 1)) {
