@@ -10,13 +10,15 @@ This mail merge is written using Google Apps Script (GAS). To utilize this scrip
 
 Use of the spreadsheet should be fairly intuitive. The essential workflow is: input a list of emails and custom info -> validate emails -> fetch a specific draft and prepare boilerplate template -> schedule sending of personalized emails -> allow Google to send, label, and track emails + responses.
 
+***
+
 Breaking down the steps: 
 
-*input a list of emails and custom info*: this info will be entered into the "Custom Info" sheet. In my sheet, an email, a name (in this case required), and an optional custom message are fields. 
+*Input a list of emails and custom info*: this info will be entered into the "Custom Info" sheet. In my sheet, an email, a name (in this case required), and an optional custom message are fields. 
 
-*validate emails*: Under "Functions", run "1. Validate Emails" to accomplish this. Fix any highlighted entries, then run again to confirm validation.
+*Validate emails*: Under "Functions", run "1. Validate Emails" to accomplish this. Fix any highlighted entries, then run again to confirm validation.
 
-*fetch a specific draft and prepare boilerplate template*: To fetch a boilerplate draft, enter the draft's subject line in the "Template Grabber" sheet, then run "2. Get Draft". This subject line will be used as the subject line when actually sending, so be sure to have settled upon a subject line by the time of drafting your boilerplate template. You can then fill in any of the several optional fields that exist for altering aspects of your template (inserting at attachment/inline image from your Drive, changing your sending name, etc).
+*Fetch a specific draft and prepare boilerplate template*: To fetch a boilerplate draft, enter the draft's subject line in the "Template Grabber" sheet, then run "2. Get Draft". This subject line will be used as the subject line when actually sending, so be sure to have settled upon a subject line by the time of drafting your boilerplate template. You can then fill in any of the several optional fields that exist for altering aspects of your template (inserting at attachment/inline image from your Drive, changing your sending name, etc).
 
 IMPORTANT: The boilerplate draft template should be an actual Gmail draft, in your draft folder. It should be devoid of attachments or inline images. Any custom fields that will show in the body of the email (IN THIS CASE "NAME" AND "CUSTOM MESSAGE") should be rendered in the draft as ${Name}, ${Custom Message}, etc. The custom message field is expected to appear before the main body of the email (if a custom message is specified) but after the initial greeting, so HTML break tags are inserted before the custom message when it exists. Thus, the following format is recommended: 
 
@@ -24,7 +26,9 @@ Dear ${Name}, ${Custom Message}
 
 [remainder of email]
 
-*schedule sending of personalized emails*: In the "Mail Sender" tab, you can schedule a time for the emails to go out. Then, run the "3. Start Mail Schedule" function to commit your schedule. The remaining workflow step (*allow sheet to send, label, and track emails + responses*) will happen automatically (updated on a daily basis in the "Responses" sheet).
+*Schedule sending of personalized emails*: In the "Mail Sender" tab, you can schedule a time for the emails to go out. Then, run the "3. Start Mail Schedule" function to commit your schedule. The remaining workflow step (*Allow sheet to send, label, and track emails + responses*) will happen automatically (updated on a daily basis in the "Responses" sheet).
+
+***
 
 Error handling is built into the code, but if sending or labeling fails, the "Resume Sending" and "Resume Labeling" functions can be used, respectively. If response tracking fails, you may run the "Check for Responses" function (under "Other Functions"). In these cases, it is wise to run "Delete All Triggers" first, to ensure there are no backed up triggers.
 
