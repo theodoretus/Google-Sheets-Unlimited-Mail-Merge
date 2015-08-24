@@ -128,6 +128,8 @@ function sendMail() {
                 .create();
               var labelingStatusColumn = mailSenderSheet.getRange(2, 5, rowDataIndex, 1);
               labelingStatusColumn.setValue("Scheduled");
+              var responsesSheet = ss.getSheetByName('Responses');
+              responsesSheet.getRange("A2").setValue(rowDataIndex);
               return;
             }
             else {
