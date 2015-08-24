@@ -91,9 +91,15 @@ function printResponses() {
       var countersSheet = ss.getSheetByName("Counters (Ignore)");
       var labelName = mailSenderSheet.getRange("B2").getValue() + "/Reply";
       var label = GmailApp.getUserLabelByName(labelName);
-      var totalThreads = threadCounter(label, "B2");
+      var totalThreads = threadCounter(label, "C2");
       var startTime= new Date().getTime();
       var cutoffTime = (1000 * 60 * 4);
+      var templateGrabberSheet = ss.getSheetByName("Template Grabber");
+      var name = templateGrabberSheet.getRange("E2").getValue();
+      var responsesSheet = ss.getSheetByName("Responses");
+      var responsesRowDataIndex = getRowDataIndex(responsesSheet);
+      var responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
+      var responderDataLength = responderEmailData.length;
   
       //determine batch index
       if (countersSheet.getRange("A2").getValue()) {
@@ -106,7 +112,7 @@ function printResponses() {
   
       //get threads in groups and cycle through
       var threadStart = (Math.round(batchIndex * 500) - 500); 
-      var threads = label.getThreads(threadStart,500);
+      var threads = label.getThreads(threadStart,500);     
   
       for (var i = 0; i < threads.length; i++) {
         var added = false;
@@ -125,23 +131,41 @@ function printResponses() {
         } 
         //otherwise, add email address, reply to sheet 
         else {
-          var responsesSheet = ss.getSheetByName("Responses");
-          var responsesRowDataIndex = getRowDataIndex(responsesSheet);
-          var responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
-          var responderDataLength = responderEmailData.length;
-          var responderEmailAddress = threads[i].getMessages()[1].getFrom();
-          var responderEmailBody = threads[i].getMessages()[1].getPlainBody();
-          var respon
-          for (var j = 0; j < responderEmailData.length; j++) {
-            if(responderEmailData[j][0] == responderEmailAddress) {
-              added = true;
-              break;
+          responsesRowDataIndex = getRowDataIndex(responsesSheet);
+          responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
+          
+          for (var k = 0; k < threads[i].getMessageCount(); k++) {
+            added = false;
+            var sendername = Session.getActiveUser().getEmail();
+            if (name) {
+              sendername = name + " <" + Session.getActiveUser().getEmail() + ">";
             }
-          }
-          if(!added) {
-            responderEmailData[responderDataLength - 1][0] = responderEmailAddress;
-            responderEmailData[responderDataLength - 1][1] = responderEmailBody;
-            responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).setValues(responderEmailData);
+                        
+            if (threads[i].getMessages()[k].getFrom() !== sendername) {
+              var responderEmailAddress = threads[i].getMessages()[k].getFrom();
+              var responderEmailBody = threads[i].getMessages()[k].getPlainBody();
+
+              for (var j = 0; j < responderEmailData.length; j++) {
+                if(responderEmailData[j][0] == responderEmailAddress) {
+                  added = true;
+                  break;
+                }
+              }
+
+              if(!added) {
+                if (responderDataLength == 1) {
+                  responderEmailData[0][0] = responderEmailAddress;
+                  responderEmailData[0][1] = responderEmailBody;
+                }
+                else {
+                  responderEmailData.push([responderEmailAddress, responderEmailBody]);
+                }
+                Logger.log(responderEmailData);
+                responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).setValues(responderEmailData);
+                responderDataLength++;
+                responsesRowDataIndex++;
+              }
+            }
           }
       
           //check for completion of job; move to next day repetition of process if so
