@@ -69,7 +69,7 @@ function labelResponses() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
+      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
       Utilities.sleep(1000);
     }
     if (currentRetry == (maxRetries - 1)) {
@@ -160,7 +160,7 @@ function printResponses() {
     }
     //error scenario  
     catch(e) {
-      MailApp.sendEmail("theo@artsymail.com", "Error report", e.message);
+      MailApp.sendEmail("YOUR EMAIL HERE", "Error report", e.message);        //SET YOUR EMAIL
       Utilities.sleep(1000);
     }
     if (currentRetry == (maxRetries - 1)) {
