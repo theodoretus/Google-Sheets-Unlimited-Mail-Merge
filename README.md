@@ -1,5 +1,5 @@
 # Google-Sheets-Unlimited-Mail-Merge
-A mail merge that sends any number of emails (within your daily quota), labels them, and tracks replies. Please note that this script was written with specific functional needs in mind, but the script can be altered to suit others' needs.
+A mail merge that sends any number of emails (within your daily quota), labels them, and tracks replies (assuming <a href="https://support.google.com/mail/answer/5900?hl=en">conversation view</a> is enabled. Please note that this script was written with specific functional needs in mind, but the script can be altered to suit others' needs.
 
 This mail merge is written using Google Apps Script (GAS). To utilize this script, you will first need to follow these installation steps:
 
@@ -7,7 +7,6 @@ This mail merge is written using Google Apps Script (GAS). To utilize this scrip
 2. Open up the Script Editor (under "Tools") in your new sheet.
 3. Copy + paste each of the .gs files within this project into new files within the Script Editor. (Note: Google implicitly links GAS files within projects, thus there in no need for explicit requires in the .gs files). 
 4. Alter lines 144 & 237 in sender.gs, as well as lines 72 & 163 in responses.gs, to reflect the email address that you would like failure messages sent to.
-5. Disable threading in your Gmail Inbox (to properly count replies), by following <a href="https://support.google.com/mail/answer/5900?hl=en">these instructions.</a>
 
 Use of the spreadsheet should be fairly intuitive. The essential workflow is: input a list of emails and custom info -> validate emails -> fetch a specific draft and prepare boilerplate template -> schedule sending of personalized emails -> allow Google to send, label, and track emails + responses.
 
