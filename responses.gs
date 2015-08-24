@@ -162,7 +162,7 @@ function printResponses() {
               .inTimezone(ss.getSpreadsheetTimeZone())
               .create();
             countersSheet.getRange("A2").setValue(1);
-            responsesSheet.getRange("C2").setValue(responderEmailData.length);
+            responsesSheet.getRange("B2").setValue(responderEmailData.length);
             return;
           }
         }
