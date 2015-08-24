@@ -87,7 +87,6 @@ function printResponses() {
     try {
       var ss = SpreadsheetApp.getActiveSpreadsheet();
       var mailSenderSheet = ss.getSheetByName('Mail Sender');
-      var emailRowDataIndex = getRowDataIndex(mailSenderSheet);
       var countersSheet = ss.getSheetByName("Counters (Ignore)");
       var labelName = mailSenderSheet.getRange("B2").getValue() + "/Reply";
       var label = GmailApp.getUserLabelByName(labelName);
@@ -99,7 +98,6 @@ function printResponses() {
       var responsesSheet = ss.getSheetByName("Responses");
       var responsesRowDataIndex = getRowDataIndex(responsesSheet);
       var responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
-      var responderDataLength = responderEmailData.length;
   
       //determine batch index
       if (countersSheet.getRange("A2").getValue()) {
@@ -115,7 +113,6 @@ function printResponses() {
       var threads = label.getThreads(threadStart,500);     
   
       for (var i = 0; i < threads.length; i++) {
-        var added = false;
         var currentTime = new Date().getTime();
         //set trigger if cutoff time is reached
         if (currentTime - startTime >= cutoffTime) {
@@ -131,16 +128,14 @@ function printResponses() {
         } 
         //otherwise, add email address, reply to sheet 
         else {
-          responsesRowDataIndex = getRowDataIndex(responsesSheet);
-          responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
-          
           for (var k = 0; k < threads[i].getMessageCount(); k++) {
-            added = false;
+            responsesRowDataIndex = getRowDataIndex(responsesSheet);
+            responderEmailData = responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).getValues();
+            var added = false;
             var sendername = Session.getActiveUser().getEmail();
             if (name) {
               sendername = name + " <" + Session.getActiveUser().getEmail() + ">";
-            }
-                        
+            }                    
             if (threads[i].getMessages()[k].getFrom() !== sendername) {
               var responderEmailAddress = threads[i].getMessages()[k].getFrom();
               var responderEmailBody = threads[i].getMessages()[k].getPlainBody();
@@ -151,19 +146,9 @@ function printResponses() {
                   break;
                 }
               }
-
               if(!added) {
-                if (responderDataLength == 1) {
-                  responderEmailData[0][0] = responderEmailAddress;
-                  responderEmailData[0][1] = responderEmailBody;
-                }
-                else {
-                  responderEmailData.push([responderEmailAddress, responderEmailBody]);
-                }
-                Logger.log(responderEmailData);
+                responderEmailData[responderEmailData.length - 1] = [responderEmailAddress, responderEmailBody];
                 responsesSheet.getRange(3, 3, responsesRowDataIndex, 2).setValues(responderEmailData);
-                responderDataLength++;
-                responsesRowDataIndex++;
               }
             }
           }
@@ -177,6 +162,7 @@ function printResponses() {
               .inTimezone(ss.getSpreadsheetTimeZone())
               .create();
             countersSheet.getRange("A2").setValue(1);
+            responsesSheet.getRange("C2").setValue(responderEmailData.length);
             return;
           }
         }
