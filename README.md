@@ -6,7 +6,7 @@ This mail merge is written using Google Apps Script (GAS). To utilize this scrip
 1. Make your own copy of <a href="https://docs.google.com/spreadsheets/d/12d0jan8MQSV9RuM6Sw5xHmizorZcVXJQLT8Z95BVM4w/edit?usp=sharing">this spreadsheet.</a> 
 2. Open up the Script Editor (under "Tools") in your new sheet.
 3. Copy + paste each of the .gs files within this project into new files within the Script Editor. (Note: Google implicitly links GAS files within projects, thus there in no need for explicit requires in the .gs files). 
-4. Alter lines 144 & 237 in sender.gs, as well as lines 72 & 163 in responses.gs to reflect the email address that you would like failure messages sent to.
+4. Alter lines 144 & 237 in sender.gs, as well as lines 72 & 163 in responses.gs, to reflect the email address that you would like failure messages sent to.
 5. Disable threading in your Gmail Inbox (to properly count replies), by following <a href="https://support.google.com/mail/answer/5900?hl=en">these instructions.</a>
 
 Use of the spreadsheet should be fairly intuitive. The essential workflow is: input a list of emails and custom info -> validate emails -> fetch a specific draft and prepare boilerplate template -> schedule sending of personalized emails -> allow Google to send, label, and track emails + responses.
