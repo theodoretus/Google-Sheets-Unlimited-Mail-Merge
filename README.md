@@ -1,5 +1,5 @@
 # Google-Sheets-Unlimited-Mail-Merge
-A mail merge that sends any number of emails (within your daily quota), labels them, and tracks replies (assuming <a href="https://support.google.com/mail/answer/5900?hl=en">conversation view</a> is enabled. Please note that this script was written with specific functional needs in mind, but the script can be altered to suit others' needs.
+A mail merge that sends any number of emails (within your daily quota), labels them, and tracks replies (assuming <a href="https://support.google.com/mail/answer/5900?hl=en">conversation view</a> is enabled). Please note that this script was written with specific functional needs in mind, but the script can be altered to suit others' needs.
 
 This mail merge is written using Google Apps Script (GAS). To utilize this script, you will first need to follow these installation steps:
 
