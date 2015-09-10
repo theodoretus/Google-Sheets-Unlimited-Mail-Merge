@@ -162,7 +162,8 @@ function printResponses() {
               .inTimezone(ss.getSpreadsheetTimeZone())
               .create();
             countersSheet.getRange("A2").setValue(1);
-            responsesSheet.getRange("B2").setValue(responderEmailData.length);
+            responsesRowDataIndex = getRowDataIndex(responsesSheet);
+            responsesSheet.getRange("C2").setValue(responsesRowDataIndex - 1);
             return;
           }
         }
