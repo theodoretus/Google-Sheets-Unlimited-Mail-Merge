@@ -114,7 +114,12 @@ function sendMail() {
           }      
           var cellIndex = (i + 2);
           var dataIndex = (i + 1);
+          var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+           if (re.test(recipient) != false)
+           {
           GmailApp.sendEmail(recipient, subjectLine, emailBody, options);
+          }
           mailSenderSheet.getRange("D" + cellIndex).setValue("Delivered");                
           //check for completion of job; move to labeling if so
           if ((dataIndex) == rowDataIndex) {
